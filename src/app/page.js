@@ -1,103 +1,35 @@
-import Image from "next/image";
+//I want to conditionally render different components based on the status of the user (logged in or not)
+//if the user is not logged in, they should see a "landing page" which allows you to sign up/in - this also lets me not just rely on the clerk modal and instead style custom pages (I'm sure there are other ways to do that vs how i've set this logic up..)
+//if the user is logged in it, they should see their timeline/dashboard (i actually keep going back and forth on what to call this in my app, but i tend to default to timeline, so i will use that to try and avoid any confusion going on)
+//in order to do this, i will use auth with clerk
 
-export default function Home() {
+import { auth } from "@clerk/nextjs/server";
+import { db } from "@/utils/dbConnection";
+//using auth means that the homepage should be async
+import Timeline from "@/components/Timeline";
+import NewUserForm from "@/components/NewUserForm";
+//realising that the timeline will also have to be user-dependant .. I think I can do this just by passing the userid through here (thinking)
+
+export default async function Home() {
+  const { userId } = await auth();
+  //i originally used the username as the only sign in/sign up method, howewever this led me to sooo many problems as i could not correctly pass it to the supabase tables (I was trying using the currentuser functionality) so instead I have changed it to require an email to sign up and i will just allow the username to be set in the newuserform instead
+  // if the user is logged in
+  if (userId != null) {
+    //the database should be queried (async) to see if there is a matching auth id. also this was not working for a long time as i had this type constrained to an INT without realsing that clerk would obviously issue a string to allow for unique values
+    const query = await db.query(
+      `SELECT * FROM clownect_users WHERE clerkauth_id = $1`,
+      [userId]
+    );
+
+    if (query.rowCount === 0) {
+      console.log("no profile found and will redirect to profile create");
+      return <NewUserForm userid={userId} />;
+    }
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div>
+      <Timeline />
     </div>
   );
 }
