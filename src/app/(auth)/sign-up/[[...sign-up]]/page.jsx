@@ -6,7 +6,6 @@ import { SignUp } from "@clerk/nextjs";
 export default function SignUpPage() {
   return (
     <>
-      <div>SIGN Up</div>
       <SignUp />
     </>
   );
