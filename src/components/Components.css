@@ -1,0 +1,195 @@
+/* colour palette codes - storing here for ease of access as i work on this project https://colorhunt.co/palette/eb5353f9d92336ae7c187498
+#EB5353 - red
+#F9D923 - yellow
+#36AE7C - green
+#187498 - blue
+ */
+
+body {
+  background-color: rgb(255, 252, 248);
+}
+
+/* NEW USER FORM
+ */
+
+.introText {
+  display: flex;
+  font-family: var(--font-raleway);
+  font-weight: 600;
+  margin-top: 10px;
+  flex-direction: column;
+  justify-self: center;
+}
+
+.newFormAction {
+  font-family: var(--font-raleway);
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  padding: 20px;
+  height: 30dvh;
+  justify-self: center;
+}
+
+.submitButton {
+  background-color: #eb5353;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 50px;
+  cursor: pointer;
+  color: rgb(255, 252, 248);
+}
+
+.bioBox {
+  min-height: 3rem;
+  text-wrap: wrap;
+  background-color: aliceblue;
+}
+
+.usernameBox {
+  background-color: aliceblue;
+}
+
+.selectBox {
+  cursor: pointer;
+  background-color: aliceblue;
+}
+
+/* LEFTBAR
+ */
+
+.leftbar {
+  display: flex;
+  float: left;
+  background-color: #eb5353;
+  color: #eb5353;
+  font-size: xx-small;
+  border-width: 3px;
+  border-color: black;
+  border-top: none;
+  border-left: none;
+  height: 70dvh;
+  width: 4dvh;
+  overflow: hidden;
+}
+
+/* DEMO TIMELINE
+ */
+
+.postSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-items: center;
+}
+
+.demoUsername {
+  font-family: var(--font-chewy);
+  color: #187498;
+}
+
+.demoTitle {
+  font-family: var(--font-raleway);
+  font-weight: 700;
+}
+
+.demoText {
+  font-family: var(--font-raleway);
+}
+
+.continueLink {
+  color: #36ae7c;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+/* TIMELINE */
+
+.timelineUsername {
+  font-family: var(--font-chewy);
+  color: #187498;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.timelinePosttitle {
+  font-family: var(--font-raleway);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.timelineText {
+  font-family: var(--font-raleway);
+}
+
+/* POST BOX */
+
+.newPost {
+  background-color: #36ae7c;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90dvw;
+  padding: 20px;
+}
+
+.submitButtonPost {
+  background-color: #eb5353;
+  padding: 4px;
+  margin-top: 10px;
+  border-radius: 50px;
+  cursor: pointer;
+  color: rgb(255, 252, 248);
+  font-weight: 600;
+}
+
+.postBody {
+  margin-top: 5px;
+  min-height: 4.5rem;
+  width: 20dvw;
+  text-wrap: wrap;
+  background-color: aliceblue;
+}
+
+.postTitle {
+  margin-top: 5px;
+  background-color: aliceblue;
+  width: 20dvw;
+}
+
+/* RightBAR
+ */
+
+.rightnav {
+  display: flex;
+  float: right;
+  justify-items: start;
+  background-color: #eb5353;
+  color: #eb5353;
+  font-size: xx-small;
+  border-width: 3px;
+  border-color: black;
+  border-top: none;
+  border-right: none;
+  height: 70dvh;
+  width: 4dvh;
+  overflow: hidden;
+}
+
+.rightnav:hover {
+  width: 10rem;
+  transition: 0.5s;
+}
+
+.signOut {
+  display: flex;
+  flex-direction: column;
+  height: 3rem;
+  width: 5rem;
+  background-color: white;
+  cursor: pointer;
+}

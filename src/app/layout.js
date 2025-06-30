@@ -2,7 +2,11 @@ import { Chewy, Raleway } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import { ClerkProvider } from "@clerk/nextjs";
-
+import Header from "@/components/Header";
+import { SignedIn } from "@clerk/nextjs";
+import LeftBar from "@/components/LeftBar";
+import RightNav from "@/components/RightNav";
+//i only want my header to be visible when you sign in, i believe this is how to do it
 //fonts
 
 const fontChewy = Chewy({
@@ -35,7 +39,11 @@ export default function RootLayout({ children }) {
         <body
           className={`${fontChewy.variable} ${fontRaleway.variable} antialiased`}
         >
-          {" "}
+          <SignedIn>
+            {" "}
+            <Header />
+            <LeftBar /> <RightNav />
+          </SignedIn>{" "}
           {children}
         </body>
       </html>

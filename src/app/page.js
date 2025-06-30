@@ -9,6 +9,8 @@ import { db } from "@/utils/dbConnection";
 import Timeline from "@/components/Timeline";
 import NewUserForm from "@/components/NewUserForm";
 //realising that the timeline will also have to be user-dependant .. I think I can do this just by passing the userid through here (thinking)
+import NewPost from "@/components/NewPost";
+import LeftBar from "@/components/LeftBar";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -25,11 +27,12 @@ export default async function Home() {
       console.log("no profile found and will redirect to profile create");
       return <NewUserForm userid={userId} />;
     }
-  }
 
-  return (
-    <div>
-      <Timeline />
-    </div>
-  );
+    return (
+      <div>
+        <Timeline />
+        <NewPost userid={userId} />
+      </div>
+    );
+  }
 }
